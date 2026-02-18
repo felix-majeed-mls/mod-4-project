@@ -1,9 +1,19 @@
-import { getShows } from "./fetch-helpers.js";
-import { getSingleShow } from "./fetch-helpers.js";
-import { init } from "./app.js";
+import { getShows, getSingleShow } from "./fetch-helpers.js";
+import { renderCollection, renderShowDetails, init } from "./app.js";
 
-getShows();
-getSingleShow();
+const showList = document.querySelector("#show-list");
+
+showList.addEventListener("click", async (event) => {
+  const li = event.target.closest("li");
+  if (!li) return;
+
+  const id = li.dataset.id;
+  try {
+    const singleShowResponse = await getSingleShow(id);
+    console.log(singleShowResponse);
+    renderShowDetails(singleShowResponse);
+  } catch (error) {
+    console.warn(error);
+  }
+});
 init();
-console.log(getShows());
-console.log(getSingleShow());
