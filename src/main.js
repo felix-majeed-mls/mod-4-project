@@ -16,4 +16,12 @@ showList.addEventListener("click", async (event) => {
     console.warn(error);
   }
 });
+const contactForm = document.querySelector('#search-form')
+contactForm.addEventListener('click', (event) => {
+    event.preventDefault()
+
+})
+
+getShows();
+getSingleShow();
 init();
