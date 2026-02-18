@@ -14,18 +14,29 @@
     <header>
       <h1>MajFlix</h1>
     </header>
+    <section>
+      <form id="search-form" aria-labelledby="search-title">
+        <h2 id="search-title">Search Shows</h2>
+        <label for="search-input">Search For Show</label>
+        <input type="text" name="query" id="search-input" required placeholder="e.g The Wire">
+
+        <button type="submit">Search</button>
+      </form>
+    </section>
+
     <section id="collection-section">
       <h2>Featured Shows</h2>
       <ul id="show-list"></ul>
     </section>
+
     <section>
       <h2>
-        Select a show to see details 
+        Select a show to see details
       </h2>
     </section>
+
   </main>
   <script type="module" src="/src/main.js"></script>
 </body>
 
-</html>
 </html>
