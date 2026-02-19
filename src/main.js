@@ -17,10 +17,17 @@ showList.addEventListener("click", async (event) => {
   }
 });
 const contactForm = document.querySelector('#search-form')
-contactForm.addEventListener('submit', (event) => {
+contactForm.addEventListener('submit', async (event) => {
   event.preventDefault()
   const searchInput = document.querySelector('#search-input')
   const searchTerm = searchInput.value
+
+  try {
+    const searchResults = await getShows(searchTerm);
+    renderCollection(searchResults);
+  } catch (error) {
+    console.warn("Search failed:", error);
+  }
 
   contactForm.reset()
 })
