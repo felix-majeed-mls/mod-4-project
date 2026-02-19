@@ -40,6 +40,10 @@ h1 {
   line-height: 1.1;
 }
 
+main {
+  display: flex;
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -68,6 +72,21 @@ h1 {
 
 .read-the-docs {
   color: #888;
+}
+
+/* 
+New adjustments for ticket 12
+- Mobile-first approach, with a standard of 1 column
+- Moving to laptop screens, 3 columns (768px)
+- Desktop screens, 5 columns (992px)
+^ Media queries for 3 and 5 columns 
+
+Using #show-list below for ease, because the ul of li items section I will be turning 
+into a grid already has an id selector with that name
+*/
+#show-list {
+    display: grid;
+    grid-template-columns: 1fr;
 }
 
 button {
