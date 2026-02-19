@@ -1,4 +1,4 @@
-import { getShows, getSingleShow } from "./fetch-helpers.js";
+import { getShows, getSingleShow, searchShows } from "./fetch-helpers.js";
 import { renderCollection, renderShowDetails, init } from "./app.js";
 
 const showList = document.querySelector("#show-list");
@@ -16,20 +16,20 @@ showList.addEventListener("click", async (event) => {
     console.warn(error);
   }
 });
-const contactForm = document.querySelector('#search-form')
-contactForm.addEventListener('submit', async (event) => {
-  event.preventDefault()
-  const searchInput = document.querySelector('#search-input')
-  const searchTerm = searchInput.value
+const contactForm = document.querySelector("#search-form");
+contactForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const searchInput = document.querySelector("#search-input");
+  const searchTerm = searchInput.value;
 
   try {
-    const searchResults = await getShows(searchTerm);
+    const searchResults = await searchShows(searchTerm);
     renderCollection(searchResults);
   } catch (error) {
     console.warn("Search failed:", error);
   }
 
-  contactForm.reset()
-})
+  contactForm.reset();
+});
 
 init();
