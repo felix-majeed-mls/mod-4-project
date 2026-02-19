@@ -1,5 +1,5 @@
 // Fetch function for collection endpoint (array of data)
-export const getShows = async () => {
+export const getShows = async (page = 0) => {
   try {
     const response = await fetch(`https://api.tvmaze.com/shows`);
     if (!response.ok) {
