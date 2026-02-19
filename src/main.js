@@ -16,12 +16,13 @@ showList.addEventListener("click", async (event) => {
     console.warn(error);
   }
 });
+const contactForm = document.querySelector('#search-form')
+contactForm.addEventListener('submit', (event) => {
+  event.preventDefault()
+  const searchInput = document.querySelector('#search-input')
+  const searchTerm = searchInput.value
 
-const contactForm = document.querySelector("#search-form");
-contactForm.addEventListener("click", (event) => {
-  event.preventDefault();
-});
+  contactForm.reset()
+})
 
-getShows();
-getSingleShow();
 init();
