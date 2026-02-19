@@ -15,17 +15,6 @@ showList.addEventListener("click", async (event) => {
   } catch (error) {
     console.warn(error);
   }
-  const li = event.target.closest("li");
-  if (!li) return;
-
-  const id = li.dataset.id;
-  try {
-    const singleShowResponse = await getSingleShow(id);
-    console.log(singleShowResponse);
-    renderShowDetails(singleShowResponse);
-  } catch (error) {
-    console.warn(error);
-  }
 });
 const contactForm = document.querySelector('#search-form')
 contactForm.addEventListener('click', (event) => {
