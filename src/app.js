@@ -1,4 +1,5 @@
 import { getShows } from "./fetch-helpers.js";
+import { toggleFavorites, getFavorites } from "./storage-helpers.js";
 
 export const renderCollection = (shows) => {
   const ul = document.querySelector("#show-list");
@@ -30,19 +31,45 @@ export const renderShowDetails = (show) => {
   const showAiringDates = document.querySelector("#show-airingdates");
   const showRating = document.querySelector("#show-rating");
   const showSummary = document.querySelector("#show-summary");
+  const favoritesButton = document.querySelector('#favorites-button')
 
   showName.textContent = show.name;
-  showImage.src = show.image?.medium || "placeholder-url-here";
+  showImage.src = show.image?.medium || "https://via.placeholder.com";
   showImage.alt = show.name;
   showGenre.textContent = show.genres.join(", ");
   showAiringDates.textContent = `Premiered: ${show.premiered}, Ended: ${show.ended}`;
   showRating.textContent = `Rating: ${show.rating.average || "N/A"}`;
-  showSummary.textContent = show.summary;
+
+  const cleanSummary = show.summary ? show.summary.replace(/<[^>]*>/g, '') : "No summary available"
+  showSummary.textContent = cleanSummary
+
+  //Checks if show is already favorited
+  const favorites = getFavorites()
+  const isFavorited = favorites.includes(show.id.toString())
+
+  favoritesButton.textContent = isFavorited ? "💜 In favorites" : "❤️ Add to favorites"
+
+  // Remove old listener first tto prevent double click bugs
+  favoritesButton.onclick = () => {
+    const updatedFavs = toggleFavorites(show.id.toString());
+    const nowFavorited = updatedFavs.includes(show.id.toString())
+    favoritesButton.textContent = nowFavorited ? "💜 In favorites" : "❤️ Add to favorites"
+  }
 };
 
 export const init = async () => {
   const shows = await getShows();
   renderCollection(shows);
   console.log("renderShowDetails called");
+};
+
+
+// Inside an event listener for a favorite button:
+const handleFavoriteClick = (showId) => {
+  const updatedFavs = toggleFavorites(showId);
+  console.log("Current favorites:", updatedFavs);
+
+  // Re-render or update the button UI to show it's "favorited"
+  renderCollection(someShowData);
 };
 init();

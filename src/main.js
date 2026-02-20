@@ -5,7 +5,7 @@ const showList = document.querySelector("#show-list");
 
 showList.addEventListener("click", async (event) => {
   const li = event.target.closest("li");
-  if (!li) return;
+  if (!li || !li.dataset.id) return;
 
   const id = li.dataset.id;
   try {
