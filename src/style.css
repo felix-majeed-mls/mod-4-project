@@ -42,6 +42,13 @@ h1 {
 
 main {
   display: flex;
+  padding: 0.5rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #app {
@@ -74,6 +81,10 @@ main {
   color: #888;
 }
 
+.hidden {
+  display: none; 
+}
+
 /* 
 New adjustments for ticket 12
 - Mobile-first approach, with a standard of 1 column
@@ -87,6 +98,7 @@ into a grid already has an id selector with that name
 #show-list {
     display: grid;
     grid-template-columns: 1fr;
+    gap: 1rem;
 }
 
 /* 
