@@ -89,6 +89,21 @@ into a grid already has an id selector with that name
     grid-template-columns: 1fr;
 }
 
+/* 
+New adjustments for ticket 13
+*/
+@media (min-width: 768px) {
+    #show-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    #show-list {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
