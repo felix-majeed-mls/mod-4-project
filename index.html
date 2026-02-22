@@ -13,33 +13,39 @@
   <main>
     <header>
       <h1>MajFlix</h1>
+      <button id="favorites-toggle">My Favorites</button>
+
+      <section>
+        <form id="search-form" aria-labelledby="search-title">
+          <h2 id="search-title">Search Shows</h2>
+          <label class="visually-hidden" for="search-input">Search for a show</label>
+          <input type="text" name="query" id="search-input" required placeholder="e.g The Wire">
+          <button type="submit">Search</button>
+        </form>
+      </section>
     </header>
-    <section>
-      <form id="search-form" aria-labelledby="search-title">
-        <h2 id="search-title">Search Shows</h2>
-        <label for="search-input">Search For Show</label>
-        <input type="text" name="query" id="search-input" required placeholder="e.g The Wire">
-
-        <button type="submit">Search</button>
-      </form>
-    </section>
-
+      <section id="favorites-section" class="hidden">
+        <h2>Favorites Section</h2>
+        <ul id="render-favorites">
+        </ul>
+      </section>
     <section id="collection-section">
       <h2>Featured Shows</h2>
       <ul id="show-list"></ul>
     </section>
 
-    <section id="show-details">
-      <button id="favorites-button">Add to Favorites</button>
-      <h2>
-        Select a show to see details
-      </h2>
-      <h3 id="show-name"></h3>
-      <img id="show-image">
-      <p id="show-genre"></p>
-      <p id="show-airingdates"></p>
-      <p id="show-rating"></p>
-      <p id="show-summary"></p>
+    <section id="show-details" class="hidden">  
+      <div id="show-card">
+        <h2>Show Details</h2>
+        <button id="close-button">X</button> 
+          <h3 id="show-name"></h3>
+          <img id="show-image">
+          <p id="show-genre"></p>
+          <p id="show-airingdates"></p>
+          <p id="show-rating"></p>
+          <p id="show-summary"></p>
+          <button id="favorites-button">Add to Favorites</button>
+      </div>
     </section>
 
   </main>

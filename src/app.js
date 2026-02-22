@@ -1,8 +1,8 @@
-import { getShows } from "./fetch-helpers.js";
+import { getShows, getSingleShow } from "./fetch-helpers.js";
 import { toggleFavorites, getFavorites } from "./storage-helpers.js";
 
-export const renderCollection = (shows) => {
-  const ul = document.querySelector("#show-list");
+export const renderCollection = (shows, ulSelector) => {
+  const ul = document.querySelector(ulSelector);
   ul.replaceChildren();
   shows.forEach((show) => {
     const li = document.createElement("li");
@@ -31,7 +31,7 @@ export const renderShowDetails = (show) => {
   const showAiringDates = document.querySelector("#show-airingdates");
   const showRating = document.querySelector("#show-rating");
   const showSummary = document.querySelector("#show-summary");
-  const favoritesButton = document.querySelector('#favorites-button')
+  const favoritesButton = document.querySelector("#favorites-button");
 
   showName.textContent = show.name;
   showImage.src = show.image?.medium || "https://via.placeholder.com";
@@ -40,36 +40,41 @@ export const renderShowDetails = (show) => {
   showAiringDates.textContent = `Premiered: ${show.premiered}, Ended: ${show.ended}`;
   showRating.textContent = `Rating: ${show.rating.average || "N/A"}`;
 
-  const cleanSummary = show.summary ? show.summary.replace(/<[^>]*>/g, '') : "No summary available"
-  showSummary.textContent = cleanSummary
+  const cleanSummary = show.summary
+    ? show.summary.replace(/<[^>]*>/g, "")
+    : "No summary available";
+  showSummary.textContent = cleanSummary;
 
   //Checks if show is already favorited
-  const favorites = getFavorites()
-  const isFavorited = favorites.includes(show.id.toString())
+  const favorites = getFavorites();
+  const isFavorited = favorites.includes(show.id.toString());
 
-  favoritesButton.textContent = isFavorited ? "💜 In favorites" : "❤️ Add to favorites"
+  favoritesButton.textContent = isFavorited
+    ? "💜 In favorites"
+    : "❤️ Add to favorites";
 
   // Remove old listener first tto prevent double click bugs
   favoritesButton.onclick = () => {
     const updatedFavs = toggleFavorites(show.id.toString());
-    const nowFavorited = updatedFavs.includes(show.id.toString())
-    favoritesButton.textContent = nowFavorited ? "💜 In favorites" : "❤️ Add to favorites"
-  }
+    const nowFavorited = updatedFavs.includes(show.id.toString());
+    favoritesButton.textContent = nowFavorited
+      ? "💜 In favorites"
+      : "❤️ Add to favorites";
+  };
+};
+
+export const renderFavorites = async () => {
+  const favoriteIds = getFavorites();
+  const arrPromises = favoriteIds.map((id) => getSingleShow(id));
+  const shows = await Promise.all(arrPromises);
+  console.log(shows);
+  renderCollection(shows, "#render-favorites");
 };
 
 export const init = async () => {
   const shows = await getShows();
-  renderCollection(shows);
+  renderCollection(shows, "#show-list");
   console.log("renderShowDetails called");
 };
 
-
-// Inside an event listener for a favorite button:
-const handleFavoriteClick = (showId) => {
-  const updatedFavs = toggleFavorites(showId);
-  console.log("Current favorites:", updatedFavs);
-
-  // Re-render or update the button UI to show it's "favorited"
-  renderCollection(someShowData);
-};
 init();
