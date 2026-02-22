@@ -1,8 +1,8 @@
-import { getShows } from "./fetch-helpers.js";
+import { getShows, getSingleShow } from "./fetch-helpers.js";
 import { toggleFavorites, getFavorites } from "./storage-helpers.js";
 
-export const renderCollection = (shows) => {
-  const ul = document.querySelector("#show-list");
+export const renderCollection = (shows, ulSelector) => {
+  const ul = document.querySelector(ulSelector);
   ul.replaceChildren();
   shows.forEach((show) => {
     const li = document.createElement("li");
@@ -31,38 +31,51 @@ export const renderShowDetails = (show) => {
   const showAiringDates = document.querySelector("#show-airingdates");
   const showRating = document.querySelector("#show-rating");
   const showSummary = document.querySelector("#show-summary");
+  const favoritesButton = document.querySelector("#favorites-button");
 
   showName.textContent = show.name;
-  showImage.src = show.image?.medium || "placeholder-url-here";
+  showImage.src = show.image?.medium || "https://via.placeholder.com";
   showImage.alt = show.name;
   showGenre.textContent = show.genres.join(", ");
   showAiringDates.textContent = `Premiered: ${show.premiered}, Ended: ${show.ended}`;
   showRating.textContent = `Rating: ${show.rating.average || "N/A"}`;
 
-  const stripHtml = (htmlString) => {
-    //Create a parser instance and parse the string into a temporary HTML document
-    const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+  const cleanSummary = show.summary
+    ? show.summary.replace(/<[^>]*>/g, "")
+    : "No summary available";
+  showSummary.textContent = cleanSummary;
 
-    //Return only the plain text content (or a fallback)
-    return doc.body.textContent || "No summary available";
-  };
-  showSummary.textContent = stripHtml(show.summary);
-
-  const favoritesButton = document.querySelector('#favorites-button');
-
+  //Checks if show is already favorited
   const favorites = getFavorites();
   const isFavorited = favorites.includes(show.id.toString());
-  favoritesButton.textContent = isFavorited ? "💜 Saved" : "❤️ Favorite";
 
-  favoritesButton.onclick = () => {
-    const updated = toggleFavorites(show.id.toString());
-    const nowFav = updated.includes(show.id.toString());
-    favoritesButton.textContent = nowFav ? "💜 Saved" : "❤️ Favorite";
-  }
+  favoritesButton.textContent = isFavorited
+    ? "💜 In favorites"
+    : "❤️ Add to favorites";
+
+  // Remove old listener first tto prevent double click bugs
+  favoritesButton.onclick = async () => {
+    const updatedFavs = toggleFavorites(show.id.toString());
+    const nowFavorited = updatedFavs.includes(show.id.toString());
+    favoritesButton.textContent = nowFavorited
+      ? "💜 In favorites"
+      : "❤️ Add to favorites";
+
+    //Refresh the favorites list in the background
+    await renderFavorites()
+  };
+};
+
+export const renderFavorites = async () => {
+  const favoriteIds = getFavorites();
+  const arrPromises = favoriteIds.map((id) => getSingleShow(id));
+  const shows = await Promise.all(arrPromises);
+  console.log(shows);
+  renderCollection(shows, "#render-favorites");
 };
 
 export const init = async () => {
   const shows = await getShows();
-  renderCollection(shows);
+  renderCollection(shows, "#show-list");
   console.log("renderShowDetails called");
 };
