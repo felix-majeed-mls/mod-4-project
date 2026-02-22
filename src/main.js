@@ -28,8 +28,6 @@ closeButton.addEventListener("click", () => {
   detailsSection.classList.add("hidden");
 });
 
-init();
-
 const showDetails = document.querySelector("#show-details");
 showDetails.addEventListener("click", (event) => {
   if (event.target === showDetails) {
@@ -66,3 +64,5 @@ const favoriteList = document.querySelector("#render-favorites");
 
 showList.addEventListener("click", handleShowClick);
 favoriteList.addEventListener("click", handleShowClick);
+
+init();

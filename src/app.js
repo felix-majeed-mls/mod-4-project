@@ -54,12 +54,15 @@ export const renderShowDetails = (show) => {
     : "❤️ Add to favorites";
 
   // Remove old listener first tto prevent double click bugs
-  favoritesButton.onclick = () => {
+  favoritesButton.onclick = async () => {
     const updatedFavs = toggleFavorites(show.id.toString());
     const nowFavorited = updatedFavs.includes(show.id.toString());
     favoritesButton.textContent = nowFavorited
       ? "💜 In favorites"
       : "❤️ Add to favorites";
+
+    //Refresh the favorites list in the background
+    await renderFavorites()
   };
 };
 
@@ -76,5 +79,3 @@ export const init = async () => {
   renderCollection(shows, "#show-list");
   console.log("renderShowDetails called");
 };
-
-init();
