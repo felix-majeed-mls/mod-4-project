@@ -32,7 +32,9 @@ export const getSingleShow = async (showId) => {
 
 export const searchShows = async (query) => {
   try {
-    const response = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(query)}`)
+    const response = await fetch(
+      `https://api.tvmaze.com/search/shows?q=${encodeURIComponent(query)}`,
+    );
     if (!response.ok) {
       throw new Error(
         `Error detected: ${response.status} ${response.statusText}`,
@@ -40,11 +42,11 @@ export const searchShows = async (query) => {
     }
     const data = await response.json();
     if (!Array.isArray(data)) {
-      return []
+      return [];
     }
-    return data.map(entry => entry.show)
+    return data.map((entry) => entry.show);
   } catch (error) {
     console.warn(error);
-    throw error
+    throw error;
   }
-}
+};
