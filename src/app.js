@@ -1,4 +1,5 @@
 import { getShows } from "./fetch-helpers.js";
+import { toggleFavorites, getFavorites } from "./storage-helpers.js";
 
 export const renderCollection = (shows) => {
   const ul = document.querySelector("#show-list");
@@ -37,7 +38,27 @@ export const renderShowDetails = (show) => {
   showGenre.textContent = show.genres.join(", ");
   showAiringDates.textContent = `Premiered: ${show.premiered}, Ended: ${show.ended}`;
   showRating.textContent = `Rating: ${show.rating.average || "N/A"}`;
-  showSummary.textContent = show.summary;
+
+  const stripHtml = (htmlString) => {
+    //Create a parser instance and parse the string into a temporary HTML document
+    const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+
+    //Return only the plain text content (or a fallback)
+    return doc.body.textContent || "No summary available";
+  };
+  showSummary.textContent = stripHtml(show.summary);
+
+  const favoritesButton = document.querySelector('#favorites-button');
+
+  const favorites = getFavorites();
+  const isFavorited = favorites.includes(show.id.toString());
+  favoritesButton.textContent = isFavorited ? "💜 Saved" : "❤️ Favorite";
+
+  favoritesButton.onclick = () => {
+    const updated = toggleFavorites(show.id.toString());
+    const nowFav = updated.includes(show.id.toString());
+    favoritesButton.textContent = nowFav ? "💜 Saved" : "❤️ Favorite";
+  }
 };
 
 export const init = async () => {
@@ -45,4 +66,3 @@ export const init = async () => {
   renderCollection(shows);
   console.log("renderShowDetails called");
 };
-init();
