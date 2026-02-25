@@ -89,3 +89,7 @@ TV Mazed API - https://www.tvmaze.com/api
 - **Advanced Search Filter** - An addition of "filters" for the search bar would give users a better way to find a specific title, or serve as a way to find shows that match specific data that the search filter would request, such as ratings, genres, air dates, etc.
 
 - **Responsive display** - Empty state messages to an empty favorite section, as well as a "no results found" state message after not finding a specific title would allow for a more seamless user experience.
+
+## AI Usage
+
+This project provided us an opportunity to build with AI assistance. Check out our AI Usage Document(https://docs.google.com/document/d/1jUSv2wbn5phHKvaIW0iehQpxWkH1JScP1GKBFH-eoFQ/edit?usp=sharing) to see how we used AI on this project.
