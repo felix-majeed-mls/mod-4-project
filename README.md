@@ -92,4 +92,4 @@ TV Mazed API - https://www.tvmaze.com/api
 
 ## AI Usage
 
-This project provided us an opportunity to build with AI assistance. Check out our AI Usage Document(https://docs.google.com/document/d/1jUSv2wbn5phHKvaIW0iehQpxWkH1JScP1GKBFH-eoFQ/edit?usp=sharing) to see how we used AI on this project.
+This project provided us an opportunity to build with AI assistance. Check out our AI Usage Document (https://docs.google.com/document/d/1jUSv2wbn5phHKvaIW0iehQpxWkH1JScP1GKBFH-eoFQ/edit?usp=sharing) to see how we used AI on this project.
